@@ -36,7 +36,22 @@ class MainScreen extends StatelessWidget {
               MaterialPageRoute(builder: (context) => WebViewScreen()),
             );
           },
-          child: Text('Start'),
+          style: ElevatedButton.styleFrom(
+            // foregroundColor: Colors.pinkAccent,//change background color of button
+            // backgroundColor: Colors.yellow,//change text color of button
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            elevation: 15.0,
+            padding: const EdgeInsets.all(20),
+          ),
+          child: Text('Start',
+            style: const TextStyle(
+              color: Color(0XFFFFFFFF),
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );

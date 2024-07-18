@@ -20,6 +20,8 @@ class SuccessPage extends StatelessWidget {
             SizedBox(height: 8),
             Text('Last Name: ${userInfo['lastName']}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
+            Text('Email: ${userInfo['email']}', style: TextStyle(fontSize: 18)),
+            SizedBox(height: 8),
             Text('Country: ${userInfo['country']}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 8),
             Text('Timezone: ${userInfo['timezone']}', style: TextStyle(fontSize: 18)),
