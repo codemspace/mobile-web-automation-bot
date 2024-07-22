@@ -85,8 +85,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       return JSON.stringify(userInfo);
                     })();
                   ''');
-
-                  final userInfoMap = jsonDecode(userInfoJson as String);
+                  print('userInfoJson: ');
+                  print(userInfoJson);
+                  final userInfoStr = jsonDecode(userInfoJson as String);
+                  print('userInfoMap: ');
+                  print(userInfoStr);
+                  Map<String, dynamic> userInfoMap = jsonDecode(userInfoStr);
 
                   final encryptedInfo = encryptLoginInfo(userInfoJson as String);
                   final prefs = await SharedPreferences.getInstance();
@@ -99,7 +103,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         builder: (context) => SuccessPage(userInfo: userInfoMap),
                       ),
                     );
-                    ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoMap.toString()}')));
+                    ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoStr.toString()}')));
                     print('Navigated to SuccessPage'); // Debug log
                   }
 
