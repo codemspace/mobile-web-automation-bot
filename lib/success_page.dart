@@ -13,19 +13,29 @@ class SuccessPage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('First Name: ${userInfo['firstName']}', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Last Name: ${userInfo['lastName']}', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Email: ${userInfo['email']}', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Country: ${userInfo['country']}', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 8),
-            Text('Timezone: ${userInfo['timezone']}', style: TextStyle(fontSize: 18)),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Name: ${userInfo['name']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Nickname: ${userInfo['nickname']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Email: ${userInfo['email']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Phone: ${userInfo['phone']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Date of Birth: ${userInfo['dateOfBirth']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Nationality: ${userInfo['nationality']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Gender: ${userInfo['gender']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Address: ${userInfo['address']}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 8),
+              Text('Passport: ${userInfo['passport']}', style: TextStyle(fontSize: 18)),
+            ],
+          ),
         ),
       ),
     );

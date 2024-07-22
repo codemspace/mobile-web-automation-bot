@@ -14,11 +14,18 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late WebViewController _controller;
-  final String loginUrl = 'https://www.ilovepdf.com/login';
-  final String homeUrl = 'https://www.ilovepdf.com/';
-  final String userUrl = 'https://www.ilovepdf.com/user';
-  final String email = 'promsdev@outlook.com'; // replace with your email
-  final String password = 'KKKkkk123!@#'; // replace with your password
+  final String homeUrl = 'https://www.booking.com';  
+  final String loginEmailUrl = 'https://account.booking.com/sign-in?op_token=';
+  final String loginPasswordUrl = 'https://account.booking.com/sign-in/password?op_token=';
+  final String loginSuccessUrl = 'https://www.booking.com/?auth_success=1';
+  final String userSettingUrl = 'https://account.booking.com/mysettings';
+  final String userSettingPersonalUrl = 'https://account.booking.com/mysettings/personal?aid=';
+  final String landingUrl = 'https://www.booking.com/index.html?aid=';
+  final String logoutUrl = 'https://www.booking.com/?logged_out=1';
+
+  final String email = 'DecUser001@gmail.com'; // replace with your email
+  final String password = '&CSgU7j!uZ?tDDH'; // replace with your password
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('WebView'),
+        title: Text('Website'),
       ),
       body: WebViewWidget(
         controller: _controller = WebViewController()
@@ -36,65 +43,55 @@ class _WebViewScreenState extends State<WebViewScreen> {
               onPageFinished: (url) async {
                 final currentContext = context;
                 print('Navigated to: $url'); // Debug log
-
-                if (url == loginUrl) {
-                  // Inject JavaScript to fill in the login form and submit it
+                
+                if (refineUrl(url) == homeUrl) {
+                  // Inject JavaScript to click the Sign in button
                   await _controller.runJavaScript('''
-                    // document.getElementById('loginEmail').value = '$email';
-                    // document.getElementById('inputPasswordAuth').value = '$password';
-                    // document.getElementById('loginBtn').click();
+                    document.querySelector('a[data-testid="header-small-sign-in-button"]').click();
                   ''');
-                } else if (url == homeUrl) {
-                  // Navigate to user profile page after successful login
-                  await _controller.loadRequest(Uri.parse(userUrl));
-                } else if (url == userUrl) {
+                  print('Sign in'); // Debug log
+                } else if (containsPrefix(url, loginEmailUrl)) {
+                  // Inject JavaScript to fill in the login form and submit it
+                  print('Input Email');
+                  await _controller.runJavaScript('''
+                    document.getElementById('username').value = '$email';
+                    // document.querySelector('button[type="submit"]').click();
+                  ''');
+                } else if (containsPrefix(url, loginPasswordUrl)) {
+                  // Inject JavaScript to fill in the login form and submit it
+                  print('Input Password');
+                  await _controller.runJavaScript('''
+                    document.getElementById('password').value = '$password';
+                    document.querySelector('button[type="submit"]').click();
+                  ''');
+                } else if (refineUrl(url) == loginSuccessUrl) {
+                  // Navigate to user settings page after successful login
+                  await _controller.loadRequest(Uri.parse(userSettingUrl));
+                  print('Load to user setting'); // Debug log
+                } else if (containsPrefix(url, userSettingPersonalUrl)) {
                   // Inject JavaScript to scrape user information
                   final userInfoJson = await _controller.runJavaScriptReturningResult('''
                     (function() {
-                      var firstName, lastName, country, timezone, email;
-                      var userInfoDiv = document.getElementById('account-preview');
-                      if (userInfoDiv) {
-                        var userInfo = userInfoDiv.querySelectorAll('.user-info')[0];
-                        if (userInfo) {
-                          firstName = userInfo.querySelector('p:nth-of-type(1)').innerText.split(':')[1]. replace("\\n", "");
-                          lastName = userInfo.querySelector('p:nth-of-type(2)').innerText.split(':')[1]. replace("\\n", "");
-                          country = userInfo.querySelector('p:nth-of-type(3)').innerText.split(':')[1]. replace("\\n", "").trim();
-                          timezone = userInfo.querySelector('p:nth-of-type(4)').innerText.split(':')[1]. replace("\\n", "");
-                        } else {
-                          return JSON.stringify({error: 'user-info not found'});
-                        }
-                      } else {
-                        return JSON.stringify({error: 'account-preview not found'});
-                      }
-
-                      var emailInfoDiv = document.getElementById('email-preview');
-                      if (emailInfoDiv) {
-                        var emailInfo = emailInfoDiv.querySelectorAll('.user-info')[0];
-                        if (emailInfo) {
-                          email = emailInfo.querySelector('p:nth-of-type(1)').innerText.split(':')[1]. replace("\\n", "");
-                        } else {
-                          return JSON.stringify({error: 'email-info not found'});
-                        }
-                      } else {
-                        return JSON.stringify({error: 'email-preview not found'});
-                      }
-
-                      return JSON.stringify({firstName, lastName, email, country, timezone});
+                      var userInfo = {};
+                      userInfo.name = document.querySelector('[data-test-id="mysettings-row-name"] .comp-container__element').innerText;
+                      userInfo.nickname = document.querySelector('[data-test-id="mysettings-row-nickname"] .comp-container__element').innerText;
+                      userInfo.email = document.querySelector('[data-test-id="mysettings-row-email"] .comp-container__element').innerText;
+                      userInfo.phone = document.querySelector('[data-test-id="mysettings-row-phone"] .comp-container__element').innerText;
+                      userInfo.dateOfBirth = document.querySelector('[data-test-id="mysettings-row-dateOfBirth"] .comp-container__element').innerText;
+                      userInfo.nationality = document.querySelector('[data-test-id="mysettings-row-nationality"] .comp-container__element').innerText;
+                      userInfo.gender = document.querySelector('[data-test-id="mysettings-row-gender"] .comp-container__element').innerText;
+                      userInfo.address = document.querySelector('[data-test-id="mysettings-row-address"] .comp-container__element').innerText;
+                      userInfo.passport = document.querySelector('[data-test-id="mysettings-row-travelDocument"] .comp-container__element').innerText;
+                      return JSON.stringify(userInfo);
                     })();
                   ''');
 
-                  final userInfoStr = jsonDecode(userInfoJson as String);
-
-                  Map<String, dynamic> userInfoMap = jsonDecode(userInfoStr);
-
-
-
+                  final userInfoMap = jsonDecode(userInfoJson as String);
 
                   final encryptedInfo = encryptLoginInfo(userInfoJson as String);
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setString('user_info', encryptedInfo);
 
-                  
                   if (mounted) {
                     Navigator.push(
                       currentContext,
@@ -102,24 +99,49 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         builder: (context) => SuccessPage(userInfo: userInfoMap),
                       ),
                     );
-                    ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoStr.toString()}')));
+                    ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoMap.toString()}')));
                     print('Navigated to SuccessPage'); // Debug log
                   }
 
                   // Navigator.pop(context);
+                } else if (refineUrl(url) == refineUrl(logoutUrl)) {
+                  print('Logged out!');
+                } else if (containsPrefix(url, userSettingUrl)) {
+                  // Navigate to user settings page after successful login
+                  // await _controller.loadRequest(Uri.parse(userSettingPersonalUrl));
+                  await _controller.runJavaScript('''
+                    document.querySelector('a[data-test-id="mysettings-nav-link-personal_details"]').click();
+                  ''');
+                  print('Navigated to user settings page'); // Debug log
                 } else {
-                  loginState.incrementAttempts();
-                  if (loginState.loginAttempts >= 3) {
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Locked out after 3 attempts')));
-                  }
+                  // loginState.incrementAttempts();
+                  // if (loginState.loginAttempts >= 3) {
+                  //   Navigator.pop(context);
+                  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Locked out after 3 attempts')));
+                  // }
+                  print('Nothing');
+                  // await _controller.runJavaScript('''
+                  //   document.querySelectorAll('button[type="button"]').forEach(button => {
+                  //     if (button.innerText.includes('Sign out')) {
+                  //       button.click();
+                  //     }
+                  //   });
+                  // ''');
+                  // print('Sign out button clicked'); // Debug log
                 }
               },
             ),
           )
-          ..loadRequest(Uri.parse(loginUrl)),
+          ..loadRequest(Uri.parse(homeUrl)),
       ),
     );
+  }
+
+  void _signOut() async {
+    await _controller.runJavaScript('''
+      document.querySelector('button[form="header-mfe-sign-out"]').click();
+    ''');
+    print('Sign out button clicked'); // Debug log
   }
 
   String encryptLoginInfo(String loginInfo) {
@@ -129,5 +151,16 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
     final encrypted = encrypter.encrypt(loginInfo, iv: iv);
     return encrypted.base64;
+  }
+
+  String refineUrl(String url) {
+    if (url.endsWith('/')) {
+      return url.substring(0, url.length - 1);
+    }
+    return url;
+  }
+
+  bool containsPrefix(String url, String prefix) {
+    return url.startsWith(prefix);
   }
 }
