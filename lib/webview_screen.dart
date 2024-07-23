@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'login_state.dart';
 import 'success_page.dart';
+import 'pages/profile_page.dart';
 import 'package:provider/provider.dart';
 
 class WebViewScreen extends StatefulWidget {

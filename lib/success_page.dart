@@ -9,7 +9,7 @@ class SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Information'),
+        title: Text('Personal details'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

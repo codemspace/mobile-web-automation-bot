@@ -40,6 +40,9 @@ dependencies:
   shared_preferences: ^2.2.3
   provider: ^6.1.2
   encrypt: ^5.0.3
+  email_validator: ^3.0.0
+  image_picker: ^1.0.8
+  string_validator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
