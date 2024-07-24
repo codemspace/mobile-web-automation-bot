@@ -4,9 +4,10 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'login_state.dart';
-import 'success_page.dart';
+// import 'success_page.dart';
 import 'pages/profile_page.dart';
 import 'package:provider/provider.dart';
+import '../user/user_data.dart';
 
 class WebViewScreen extends StatefulWidget {
   @override
@@ -24,8 +25,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   final String landingUrl = 'https://www.booking.com/index.html?aid=';
   final String logoutUrl = 'https://www.booking.com/?logged_out=1';
 
-  final String email = 'DecUser001@gmail.com'; // replace with your email
-  final String password = '&CSgU7j!uZ?tDDH'; // replace with your password
+  final String email = 'promsdev@outlook.com'; // replace with your email
+  final String password = 'KKKkkk123!@#'; // replace with your password
 
 
   @override
@@ -93,6 +94,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   print(userInfoStr);
                   Map<String, dynamic> userInfoMap = jsonDecode(userInfoStr);
 
+                  var user = UserData.myUser;
+
+                  user.name = userInfoMap['name'];
+                  user.email = userInfoMap['email'];
+                  user.phone = userInfoMap['phone'];
+
                   final encryptedInfo = encryptLoginInfo(userInfoJson as String);
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setString('user_info', encryptedInfo);
@@ -101,7 +108,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     Navigator.push(
                       currentContext,
                       MaterialPageRoute(
-                        builder: (context) => SuccessPage(userInfo: userInfoMap),
+                        // builder: (context) => SuccessPage(userInfo: userInfoMap),
+                        builder: (context) => ProfilePage(),
                       ),
                     );
                     ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoStr.toString()}')));

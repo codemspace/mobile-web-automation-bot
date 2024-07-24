@@ -18,30 +18,40 @@ class DisplayImage extends StatelessWidget {
     final color = Color.fromRGBO(64, 105, 225, 1);
 
     return Center(
-        child: Stack(children: [
-      buildImage(color),
-      Positioned(
-        child: buildEditIcon(color),
-        right: 4,
-        top: 10,
-      )
-    ]));
+      child: Stack(children: [
+        buildImage(color),
+        Positioned(
+          child: buildEditIcon(color),
+          right: 4,
+          top: 10,
+        )
+      ]),
+    );
   }
 
   // Builds Profile Image
   Widget buildImage(Color color) {
-    final image = imagePath.contains('https://')
-        ? NetworkImage(imagePath)
-        : FileImage(File(imagePath));
+    final imageProvider = getImageProvider(imagePath);
 
     return CircleAvatar(
       radius: 75,
       backgroundColor: color,
       child: CircleAvatar(
-        backgroundImage: image as ImageProvider,
+        backgroundImage: imageProvider,
         radius: 70,
       ),
     );
+  }
+
+  // Helper function to determine image provider
+  ImageProvider getImageProvider(String imagePath) {
+    if (imagePath.contains('http://') || imagePath.contains('https://')) {
+      return NetworkImage(imagePath);
+    } else if (imagePath.startsWith('assets/')) {
+      return AssetImage(imagePath);
+    } else {
+      return FileImage(File(imagePath));
+    }
   }
 
   // Builds Edit Icon on Profile Picture

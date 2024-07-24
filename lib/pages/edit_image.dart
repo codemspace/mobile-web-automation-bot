@@ -53,7 +53,7 @@ class _EditImagePageState extends State<EditImagePage> {
                       setState(
                           () => user = user.copy(imagePath: newImage.path));
                     },
-                    child: Image.network(user.image),
+                    child: (user.image.contains('http://') || user.image.contains('https://')) ? Image.network(user.image) : Image.asset(user.image),
                   ))),
           Padding(
               padding: EdgeInsets.only(top: 40),
