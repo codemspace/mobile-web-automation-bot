@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
-import '../user/user_data.dart';
-import '../widgets/appbar_widget.dart';
+import '../../user/user_data.dart';
+import '../../widgets/appbar_widget.dart';
 
 class EditImagePage extends StatefulWidget {
   const EditImagePage({Key? key}) : super(key: key);

@@ -20,6 +20,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   final String loginEmailUrl = 'https://account.booking.com/sign-in?op_token=';
   final String loginPasswordUrl = 'https://account.booking.com/sign-in/password?op_token=';
   final String loginSuccessUrl = 'https://www.booking.com/?auth_success=1';
+  // final String loginSuccessUrl = 'https://www.booking.com/?auth_success=1&account_created=1';
   final String userSettingUrl = 'https://account.booking.com/mysettings';
   final String userSettingPersonalUrl = 'https://account.booking.com/mysettings/personal?aid=';
   final String landingUrl = 'https://www.booking.com/index.html?aid=';
