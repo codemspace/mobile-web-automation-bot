@@ -81,7 +81,6 @@ class _AddTravelerPageState extends State<AddTravelerPage> {
                   if (value == null || value.isEmpty) {
                     return 'Enter the date of birth';
                   }
-                  // Add more validation for date format if necessary
                   return null;
                 },
               ),
@@ -138,7 +137,7 @@ class _AddTravelerPageState extends State<AddTravelerPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate() && _isAuthorized) {
-                        // Process add traveler
+                        // process add traveler
                       }
                     },
                     child: Text('Save'),

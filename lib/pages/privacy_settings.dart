@@ -34,7 +34,7 @@ class PrivacySettingsPage extends StatelessWidget {
                 'Select "Manage" to change your privacy settings and exercise your rights using our request form.',
             actionText: 'Manage',
             onTap: () {
-              // Handle Manage privacy settings
+              // handle
             },
           ),
         ],

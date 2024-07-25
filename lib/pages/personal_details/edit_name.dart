@@ -3,7 +3,6 @@ import 'package:string_validator/string_validator.dart';
 // import '../../user/user_data.dart';
 import '../../widgets/appbar_widget.dart';
 
-// This class handles the Page to edit the Name Section of the User Profile.
 class EditNameFormPage extends StatefulWidget {
   final Function(String) updateNameCallback;
 
@@ -54,7 +53,6 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                           height: 100,
                           width: 150,
                           child: TextFormField(
-                            // Handles Form Validation for First Name
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your first name';
@@ -73,7 +71,6 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                           height: 100,
                           width: 150,
                           child: TextFormField(
-                            // Handles Form Validation for Last Name
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your last name';
@@ -99,7 +96,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               final fullName = "${firstNameController.text} ${secondNameController.text}";
-                              widget.updateNameCallback(fullName); // Use the callback here
+                              widget.updateNameCallback(fullName);
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

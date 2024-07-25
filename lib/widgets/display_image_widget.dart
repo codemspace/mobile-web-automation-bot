@@ -6,7 +6,7 @@ class DisplayImage extends StatelessWidget {
   final String imagePath;
   final VoidCallback onPressed;
 
-  // Constructor
+  // constructor
   const DisplayImage({
     Key? key,
     required this.imagePath,
@@ -30,7 +30,6 @@ class DisplayImage extends StatelessWidget {
     );
   }
 
-  // Builds Profile Image
   Widget buildImage(Color color) {
     final imageProvider = getImageProvider(imagePath);
 
@@ -44,7 +43,6 @@ class DisplayImage extends StatelessWidget {
     );
   }
 
-  // Helper function to determine image provider
   ImageProvider getImageProvider(String imagePath) {
     if (imagePath.contains('http://') || imagePath.contains('https://')) {
       return NetworkImage(imagePath);
@@ -55,7 +53,6 @@ class DisplayImage extends StatelessWidget {
     }
   }
 
-  // Builds Edit Icon on Profile Picture
   Widget buildEditIcon(Color color) => buildCircle(
       all: 8,
       child: Icon(
@@ -64,7 +61,6 @@ class DisplayImage extends StatelessWidget {
         size: 20,
       ));
 
-  // Builds/Makes Circle for Edit Icon on Profile Picture
   Widget buildCircle({
     required Widget child,
     required double all,

@@ -38,7 +38,7 @@ class OtherTravelersPage extends StatelessWidget {
               icon: Icon(Icons.add),
               label: Text('Add new traveler'),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF003580), // Blue color
+                primary: Color(0xFF003580),
               ),
             ),
           ),

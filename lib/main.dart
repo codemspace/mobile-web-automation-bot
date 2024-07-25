@@ -3,9 +3,17 @@ import 'package:provider/provider.dart';
 import 'login_state.dart';
 import 'pages/account_settings.dart';
 import '../user/user_data.dart';
-import 'base_page.dart';  // Ensure you import the BasePage
+// import 'base_page.dart'; 
+// import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+
+//   Stripe.publishableKey = 'pk_test_51L8PzGKEp9uhBKrrUaQGs8uNSewO9Lm85zYGJSJZ2I5nlYSnBtGRBa7Abky4uTxR4LYx2TMjkwJ48HJ6CZKVwLFo003wdImXQs';
+
+  await dotenv.load(fileName: "assets/.env");
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => LoginState(),
@@ -40,7 +48,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF003580), // Blue color
+        backgroundColor: Color(0xFF003580),
         title: Text(
           'Booking.com',
           style: TextStyle(
@@ -77,7 +85,7 @@ class MainScreen extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             elevation: 10,
-            primary: Color(0xFF003580), // Button color
+            primary: Color(0xFF003580), 
           ),
           child: Container(
             decoration: BoxDecoration(

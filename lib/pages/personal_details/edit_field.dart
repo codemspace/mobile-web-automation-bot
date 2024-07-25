@@ -74,7 +74,7 @@ class EditFieldFormPageState extends State<EditFieldFormPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        widget.onUpdate(_controller.text);  // Calls the passed callback function
+                        widget.onUpdate(_controller.text); 
                         Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

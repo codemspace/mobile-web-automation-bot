@@ -10,7 +10,7 @@ class User {
   String address;
   String passport;
 
-  // Constructor
+  // constructor
   User({
     required this.image,
     required this.name,

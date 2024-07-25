@@ -32,7 +32,21 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
         case 'phone':
           user.phone = newValue;
           break;
-        // Add more cases as needed for other fields
+        case 'dateOfBirth':
+          user.dateOfBirth = newValue;
+          break;
+        case 'nationality':
+          user.nationality = newValue;
+          break;
+        case 'gender':
+          user.gender = newValue;
+          break;
+        case 'address':
+          user.address = newValue;
+          break;
+        case 'passport':
+          user.passport = newValue;
+          break;
       }
     });
   }

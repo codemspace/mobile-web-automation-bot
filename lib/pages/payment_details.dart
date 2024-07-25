@@ -52,7 +52,7 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
                 children: [
                   Icon(Icons.credit_card, size: 36),
                   Icon(Icons.payment, size: 36),
-                  // Add other icons as needed
+                  // other icons
                 ],
               ),
               SizedBox(height: 16),
@@ -121,7 +121,7 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Process payment
+                        // process payment
                       }
                     },
                     child: Text('Save'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../base_page.dart';
-import 'payment_details.dart';  // Import the detailed form page
+import 'payment_details.dart'; 
 
 class PaymentDetailsOverviewPage extends StatelessWidget {
   @override

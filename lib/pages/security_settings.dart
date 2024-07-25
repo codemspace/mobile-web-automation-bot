@@ -55,7 +55,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
                 'Increase your account\'s security by setting up two-factor authentication.',
             actionText: 'Set up',
             onTap: () {
-              // Handle Two-factor authentication setup
+              // handle 
             },
           ),
           Divider(),
@@ -66,7 +66,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
                 'Selecting "Sign out" will sign you out from all devices except this one. This can take up to 10 minutes.',
             actionText: 'Sign out',
             onTap: () {
-              // Handle sign out from all devices
+              // handle 
             },
           ),
           Divider(),
@@ -76,7 +76,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
             description: 'Permanently delete your Booking.com account',
             actionText: 'Delete account',
             onTap: () {
-              // Handle account deletion
+              // handle 
             },
           ),
         ],
@@ -96,7 +96,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage> {
       ),
       ElevatedButton(
         onPressed: () {
-          // Handle send email
+          // handle
         },
         child: Text('Send email'),
       ),

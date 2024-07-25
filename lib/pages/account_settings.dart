@@ -33,7 +33,7 @@ class _AccountSettingState extends State<AccountSetting> {
             title: 'Security',
             description: 'Change your security settings, set up secure authentication, or delete your account.',
             linkText: 'Manage account security',
-            destination: SecuritySettingsPage(), // Change to appropriate page when available
+            destination: SecuritySettingsPage(),
           ),
           buildCard(
             context,
@@ -41,7 +41,7 @@ class _AccountSettingState extends State<AccountSetting> {
             title: 'Privacy',
             description: 'Exercise your privacy rights and control how your data is used.',
             linkText: 'Manage privacy',
-            destination: PrivacySettingsPage(), // Change to appropriate page when available
+            destination: PrivacySettingsPage(),
           ),
           buildCard(
             context,
@@ -57,7 +57,7 @@ class _AccountSettingState extends State<AccountSetting> {
             title: 'Other travelers',
             description: 'Add or edit info about the people you’re traveling with.',
             linkText: 'Manage travelers',
-            destination: OtherTravelersPage(), // Change to appropriate page when available
+            destination: OtherTravelersPage(), 
           ),
         ],
       ),

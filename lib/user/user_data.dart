@@ -8,17 +8,17 @@ class UserData {
   static const _keyUser = 'user';
 
   static User myUser = User(
-    // image: "https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
+    // image: "https://",
     image: "assets/images/blank_user.png",
     name: 'Test Test',
-    nickname: 'asdf',
+    nickname: 'test',
     email: 'test.test@gmail.com',
-    phone: '(208) 206-5039',
-    dateOfBirth: 'asdf',
-    nationality: 'asdf',
-    gender: 'asdf',
-    address: 'asdf',
-    passport: 'asdf',
+    phone: '+1 (208) 206-5039',
+    dateOfBirth: '12/12/1995',
+    nationality: 'Ukraine',
+    gender: 'man',
+    address: 'test',
+    passport: 'test',
   );
 
   static Future init() async =>

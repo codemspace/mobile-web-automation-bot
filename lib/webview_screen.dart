@@ -26,8 +26,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   final String landingUrl = 'https://www.booking.com/index.html?aid=';
   final String logoutUrl = 'https://www.booking.com/?logged_out=1';
 
-  final String email = 'promsdev@outlook.com'; // replace with your email
-  final String password = 'KKKkkk123!@#'; // replace with your password
+  final String email = '...'; // replace with your email
+  final String password = '...'; // replace with your password
 
 
   @override
@@ -45,34 +45,29 @@ class _WebViewScreenState extends State<WebViewScreen> {
             NavigationDelegate(
               onPageFinished: (url) async {
                 final currentContext = context;
-                print('Navigated to: $url'); // Debug log
+                print('Navigated to: $url'); 
                 
                 if (refineUrl(url) == homeUrl) {
-                  // Inject JavaScript to click the Sign in button
                   await _controller.runJavaScript('''
                     document.querySelector('a[data-testid="header-small-sign-in-button"]').click();
                   ''');
-                  print('Sign in'); // Debug log
+                  print('Sign in'); 
                 } else if (containsPrefix(url, loginEmailUrl)) {
-                  // Inject JavaScript to fill in the login form and submit it
                   print('Input Email');
                   await _controller.runJavaScript('''
                     document.getElementById('username').value = '$email';
                     // document.querySelector('button[type="submit"]').click();
                   ''');
                 } else if (containsPrefix(url, loginPasswordUrl)) {
-                  // Inject JavaScript to fill in the login form and submit it
                   print('Input Password');
                   await _controller.runJavaScript('''
                     document.getElementById('password').value = '$password';
                     document.querySelector('button[type="submit"]').click();
                   ''');
                 } else if (refineUrl(url) == loginSuccessUrl) {
-                  // Navigate to user settings page after successful login
                   await _controller.loadRequest(Uri.parse(userSettingUrl));
-                  print('Load to user setting'); // Debug log
+                  print('Load to user setting'); 
                 } else if (containsPrefix(url, userSettingPersonalUrl)) {
-                  // Inject JavaScript to scrape user information
                   final userInfoJson = await _controller.runJavaScriptReturningResult('''
                     (function() {
                       var userInfo = {};
@@ -88,11 +83,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       return JSON.stringify(userInfo);
                     })();
                   ''');
-                  print('userInfoJson: ');
-                  print(userInfoJson);
                   final userInfoStr = jsonDecode(userInfoJson as String);
-                  print('userInfoMap: ');
-                  print(userInfoStr);
                   Map<String, dynamic> userInfoMap = jsonDecode(userInfoStr);
 
                   var user = UserData.myUser;
@@ -114,19 +105,18 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       ),
                     );
                     ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoStr.toString()}')));
-                    print('Navigated to SuccessPage'); // Debug log
+                    print('Navigated to SuccessPage');
                   }
 
                   // Navigator.pop(context);
                 } else if (refineUrl(url) == refineUrl(logoutUrl)) {
                   print('Logged out!');
                 } else if (containsPrefix(url, userSettingUrl)) {
-                  // Navigate to user settings page after successful login
                   // await _controller.loadRequest(Uri.parse(userSettingPersonalUrl));
                   await _controller.runJavaScript('''
                     document.querySelector('a[data-test-id="mysettings-nav-link-personal_details"]').click();
                   ''');
-                  print('Navigated to user settings page'); // Debug log
+                  print('Navigated to user settings page');
                 } else {
                   // loginState.incrementAttempts();
                   // if (loginState.loginAttempts >= 3) {
@@ -141,7 +131,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   //     }
                   //   });
                   // ''');
-                  // print('Sign out button clicked'); // Debug log
+                  // print('Sign out button clicked');
                 }
               },
             ),
@@ -155,7 +145,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
     await _controller.runJavaScript('''
       document.querySelector('button[form="header-mfe-sign-out"]').click();
     ''');
-    print('Sign out button clicked'); // Debug log
+    print('Sign out button clicked'); 
   }
 
   String encryptLoginInfo(String loginInfo) {
