@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import '../../user/user_data.dart';
+// import '../../user/user_data.dart';
 import '../../widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
 class EditNameFormPage extends StatefulWidget {
-  const EditNameFormPage({Key? key}) : super(key: key);
+  final Function(String) updateNameCallback;
+
+  const EditNameFormPage({Key? key, required this.updateNameCallback}) : super(key: key);
 
   @override
-  EditNameFormPageState createState() {
-    return EditNameFormPageState();
-  }
+  EditNameFormPageState createState() => EditNameFormPageState();
 }
 
 class EditNameFormPageState extends State<EditNameFormPage> {
   final _formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final secondNameController = TextEditingController();
-  var user = UserData.myUser;
 
   @override
   void dispose() {
     firstNameController.dispose();
+    secondNameController.dispose();
     super.dispose();
-  }
-
-  void updateUserValue(String name) {
-    user.name = name;
   }
 
   @override
@@ -101,21 +97,20 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Validate returns true if the form is valid, or false otherwise.
-                            if (_formKey.currentState!.validate() &&
-                                isAlpha(firstNameController.text +
-                                    secondNameController.text)) {
-                              updateUserValue(firstNameController.text +
-                                  " " +
-                                  secondNameController.text);
+                            if (_formKey.currentState!.validate()) {
+                              final fullName = "${firstNameController.text} ${secondNameController.text}";
+                              widget.updateNameCallback(fullName); // Use the callback here
                               Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Full name updated successfully!'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
                             }
                           },
-                          child: const Text(
-                            'Update',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
+                          child: const Text('Update'),
+                        )
                       )))
             ],
           ),

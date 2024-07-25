@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../base_page.dart';
-import 'profile_page.dart';
+import 'personal_details.dart';
 import 'security_settings.dart';
 import 'privacy_settings.dart';
 import 'other_travelers.dart';

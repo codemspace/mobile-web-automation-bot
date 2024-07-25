@@ -38,9 +38,20 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BasePage(
-      title: 'Web Automation',
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF003580), // Blue color
+        title: Text(
+          'Booking.com',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
         child: ElevatedButton(
           onPressed: () {
             var user = UserData.myUser;
@@ -64,15 +75,27 @@ class MainScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
-            elevation: 15.0,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            elevation: 10,
+            primary: Color(0xFF003580), // Button color
           ),
-          child: Text(
-            'Start',
-            style: const TextStyle(
-              color: Color(0XFFFFFFFF),
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF003580), Color(0xFF005BB5)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            child: Text(
+              'Start',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'login_state.dart';
 // import 'success_page.dart';
-import 'pages/profile_page.dart';
+import 'pages/personal_details.dart';
 import 'package:provider/provider.dart';
 import '../user/user_data.dart';
 
@@ -110,7 +110,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       currentContext,
                       MaterialPageRoute(
                         // builder: (context) => SuccessPage(userInfo: userInfoMap),
-                        builder: (context) => ProfilePage(),
+                        builder: (context) => PersonalDetailsPage(),
                       ),
                     );
                     ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoStr.toString()}')));

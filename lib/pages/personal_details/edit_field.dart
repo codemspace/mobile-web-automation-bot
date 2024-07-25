@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import '../user/user_data.dart';
 import '../../widgets/appbar_widget.dart';
 
 class EditFieldFormPage extends StatefulWidget {
@@ -75,8 +74,14 @@ class EditFieldFormPageState extends State<EditFieldFormPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        widget.onUpdate(_controller.text);
+                        widget.onUpdate(_controller.text);  // Calls the passed callback function
                         Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${widget.fieldLabel} updated successfully!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
                       }
                     },
                     child: const Text(
