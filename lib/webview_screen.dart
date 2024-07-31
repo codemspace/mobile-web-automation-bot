@@ -179,13 +179,34 @@ class _WebViewScreenState extends State<WebViewScreen> {
           // borderRadius: BorderRadius.circular(10), // Optional: if you want rounded corners
         ),
         child: Stack(
+          alignment: Alignment.center, // Centers the Stack contents
           children: [
             WebViewWidget(controller: _controller),
-            if (loadingPercentage < 100)
-              LinearProgressIndicator(
-                value: loadingPercentage / 100,
-                backgroundColor: Colors.transparent,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            if (loadingPercentage < 100) // Condition to check if loading is not yet complete
+              Container(
+                width: 100, // Diameter of the circular progress indicator
+                height: 100, // Diameter of the circular progress indicator
+                decoration: BoxDecoration(
+                  color: Colors.white, // Sets the background color of the progress indicator container
+                  shape: BoxShape.circle,
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      value: loadingPercentage / 100.0,
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
+                    Text(
+                      '${loadingPercentage}%', // Displays the percentage in the center
+                      style: TextStyle(
+                        color: Colors.black, // Color of the percentage text
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
           ],
         ),
