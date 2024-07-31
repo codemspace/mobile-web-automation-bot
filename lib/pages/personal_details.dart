@@ -41,8 +41,11 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
         case 'gender':
           user.gender = newValue;
           break;
-        case 'address':
-          user.address = newValue;
+        case 'primaryAddress':
+          user.primaryAddress = newValue;
+          break;
+        case 'mailingAddress':
+          user.mailingAddress = newValue;
           break;
         case 'passport':
           user.passport = newValue;
@@ -159,11 +162,25 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
             },
           )),
           Divider(),
-          buildUserInfoDisplay(user.address, 'Address', EditFieldFormPage(
-            fieldLabel: 'Address',
-            currentValue: user.address,
+          buildUserInfoDisplay(user.primaryAddress, 'Primary Address', EditFieldFormPage(
+            fieldLabel: 'Primary Address',
+            currentValue: user.primaryAddress,
             onUpdate: (newValue) {
-              user.address = newValue;
+              user.primaryAddress = newValue;
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your address.';
+              }
+              return null;
+            },
+          )),
+          Divider(),
+          buildUserInfoDisplay(user.mailingAddress, 'Mailing Address', EditFieldFormPage(
+            fieldLabel: 'Mailing Address',
+            currentValue: user.mailingAddress,
+            onUpdate: (newValue) {
+              user.mailingAddress = newValue;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {

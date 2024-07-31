@@ -17,7 +17,8 @@ class UserData {
     dateOfBirth: '12/12/1995',
     nationality: 'Ukraine',
     gender: 'man',
-    address: 'test',
+    primaryAddress: 'test',
+    mailingAddress: 'test',
     passport: 'test',
   );
 

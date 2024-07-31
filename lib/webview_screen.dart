@@ -5,9 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'login_state.dart';
 // import 'success_page.dart';
-import 'pages/personal_details.dart';
+// import 'pages/personal_details.dart';
 import 'package:provider/provider.dart';
 import '../user/user_data.dart';
+import 'pages/account_settings.dart';
 
 class WebViewScreen extends StatefulWidget {
   @override
@@ -16,15 +17,23 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late WebViewController _controller;
-  final String homeUrl = 'https://www.booking.com';  
-  final String loginEmailUrl = 'https://account.booking.com/sign-in?op_token=';
-  final String loginPasswordUrl = 'https://account.booking.com/sign-in/password?op_token=';
-  final String loginSuccessUrl = 'https://www.booking.com/?auth_success=1';
-  // final String loginSuccessUrl = 'https://www.booking.com/?auth_success=1&account_created=1';
-  final String userSettingUrl = 'https://account.booking.com/mysettings';
-  final String userSettingPersonalUrl = 'https://account.booking.com/mysettings/personal?aid=';
-  final String landingUrl = 'https://www.booking.com/index.html?aid=';
-  final String logoutUrl = 'https://www.booking.com/?logged_out=1';
+  // final String homeUrl = 'https://www.ally.com/';  
+  // final String loginEmailUrl = 'https://account.booking.com/sign-in?op_token=';
+  // final String loginPasswordUrl = 'https://account.booking.com/sign-in/password?op_token=';
+  // final String loginSuccessUrl = 'https://secure.ally.com/dashboard?sfts=true';
+  // final String userSettingUrl = 'https://account.booking.com/mysettings';
+  // final String userSettingPersonalUrl = 'https://account.booking.com/mysettings/personal?aid=';
+  // final String landingUrl = 'https://www.booking.com/index.html?aid=';
+  // final String logoutUrl = 'https://www.booking.com/?logged_out=1';
+  
+  final String homeUrl = 'https://www.ally.com';  
+  final String loginVerifyCode = 'https://secure.ally.com/security/verify-code?focus=heading';
+  final String loginSuccessUrl = 'https://secure.ally.com/dashboard?sfts=true';
+  final String dashboardUrl = 'https://secure.ally.com/dashboard';
+  final String redirectUrl = 'https://secure.ally.com/?redirect=/';
+
+  final String settingPersonalUrl = 'https://secure.ally.com/profile';
+  final String logoutUrl = 'https://www.ally.com/logged-off';
 
   final String email = '...'; // replace with your email
   final String password = '...'; // replace with your password
@@ -36,7 +45,16 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Website'),
+        backgroundColor: HexColor.fromHex('#650360'),
+        title: Text(
+          'Website',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: WebViewWidget(
         controller: _controller = WebViewController()
@@ -49,37 +67,51 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 
                 if (refineUrl(url) == homeUrl) {
                   await _controller.runJavaScript('''
-                    document.querySelector('a[data-testid="header-small-sign-in-button"]').click();
+                    document.querySelector('button[id="login"]').click();
                   ''');
                   print('Sign in'); 
-                } else if (containsPrefix(url, loginEmailUrl)) {
-                  print('Input Email');
-                  await _controller.runJavaScript('''
-                    document.getElementById('username').value = '$email';
-                    // document.querySelector('button[type="submit"]').click();
-                  ''');
-                } else if (containsPrefix(url, loginPasswordUrl)) {
-                  print('Input Password');
-                  await _controller.runJavaScript('''
-                    document.getElementById('password').value = '$password';
-                    document.querySelector('button[type="submit"]').click();
-                  ''');
-                } else if (refineUrl(url) == loginSuccessUrl) {
-                  await _controller.loadRequest(Uri.parse(userSettingUrl));
+                } else if (containsPrefix(url, redirectUrl)) {
+                  print('Check For Redirect');
+                // } else if (refineUrl(url) == loginSuccessUrl) {
+                //   await _controller.loadRequest(Uri.parse(settingPersonalUrl));
+                //   print('Load to user setting'); 
+                } else if (containsPrefix(url, dashboardUrl)) {
+                  await _controller.loadRequest(Uri.parse(settingPersonalUrl));
                   print('Load to user setting'); 
-                } else if (containsPrefix(url, userSettingPersonalUrl)) {
+                } else if (refineUrl(url) == settingPersonalUrl) {
                   final userInfoJson = await _controller.runJavaScriptReturningResult('''
                     (function() {
                       var userInfo = {};
-                      userInfo.name = document.querySelector('[data-test-id="mysettings-row-name"] .comp-container__element').innerText;
-                      userInfo.nickname = document.querySelector('[data-test-id="mysettings-row-nickname"] .comp-container__element').innerText;
-                      userInfo.email = document.querySelector('[data-test-id="mysettings-row-email"] .comp-container__element').innerText;
-                      userInfo.phone = document.querySelector('[data-test-id="mysettings-row-phone"] .comp-container__element').innerText;
-                      userInfo.dateOfBirth = document.querySelector('[data-test-id="mysettings-row-dateOfBirth"] .comp-container__element').innerText;
-                      userInfo.nationality = document.querySelector('[data-test-id="mysettings-row-nationality"] .comp-container__element').innerText;
-                      userInfo.gender = document.querySelector('[data-test-id="mysettings-row-gender"] .comp-container__element').innerText;
-                      userInfo.address = document.querySelector('[data-test-id="mysettings-row-address"] .comp-container__element').innerText;
-                      userInfo.passport = document.querySelector('[data-test-id="mysettings-row-travelDocument"] .comp-container__element').innerText;
+
+                      // Extracting name
+                      userInfo.name = document.querySelector('[data-dd-action-name="Users Full Name"]').innerText;
+
+                      // Extracting email
+                      // userInfo.email = document.querySelector('[data-testid="primary-email-item"]').innerText;
+                      userInfo.email = document.querySelector('[data-testid="primary-email-item"] [data-testid="private-wrapper"]').innerText;
+
+
+                      userInfo.phone = document.querySelector('[data-testid="card-phone"] [data-testid="private-wrapper"]').innerText;
+
+                      var primaryAddressParts = document.querySelectorAll('[data-testid="card-address"] .fhBGkE:first-child [data-testid="private-wrapper"]');
+                      userInfo.primaryAddress = Array.from(primaryAddressParts).map(part => {
+                        if (part.firstChild.children.length === 0) 
+                          return part.innerText;
+                        else {
+                          return part.firstChild.firstChild.innerText;
+                        }
+                      }).join(", ");
+
+                      var mailingAddressParts = document.querySelectorAll('[data-testid="card-address"] .fhBGkE:nth-child(2) [data-testid="private-wrapper"]');
+                      userInfo.mailingAddress = Array.from(primaryAddressParts).map(part => {
+                        if (part.firstChild.children.length === 0) 
+                          return part.innerText;
+                        else {
+                          return part.firstChild.firstChild.innerText;
+                        }
+                      }).join(", ");
+
+                      // Returning as a JSON string
                       return JSON.stringify(userInfo);
                     })();
                   ''');
@@ -91,6 +123,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   user.name = userInfoMap['name'];
                   user.email = userInfoMap['email'];
                   user.phone = userInfoMap['phone'];
+                  user.primaryAddress = userInfoMap['primaryAddress'];
+                  user.mailingAddress = userInfoMap['mailingAddress'];
 
                   final encryptedInfo = encryptLoginInfo(userInfoJson as String);
                   final prefs = await SharedPreferences.getInstance();
@@ -101,7 +135,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       currentContext,
                       MaterialPageRoute(
                         // builder: (context) => SuccessPage(userInfo: userInfoMap),
-                        builder: (context) => PersonalDetailsPage(),
+                        builder: (context) =>  AccountSetting(),
                       ),
                     );
                     ScaffoldMessenger.of(currentContext).showSnackBar(SnackBar(content: Text('Complete: ${userInfoStr.toString()}')));
@@ -111,12 +145,6 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   // Navigator.pop(context);
                 } else if (refineUrl(url) == refineUrl(logoutUrl)) {
                   print('Logged out!');
-                } else if (containsPrefix(url, userSettingUrl)) {
-                  // await _controller.loadRequest(Uri.parse(userSettingPersonalUrl));
-                  await _controller.runJavaScript('''
-                    document.querySelector('a[data-test-id="mysettings-nav-link-personal_details"]').click();
-                  ''');
-                  print('Navigated to user settings page');
                 } else {
                   // loginState.incrementAttempts();
                   // if (loginState.loginAttempts >= 3) {
@@ -141,12 +169,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
     );
   }
 
-  void _signOut() async {
-    await _controller.runJavaScript('''
-      document.querySelector('button[form="header-mfe-sign-out"]').click();
-    ''');
-    print('Sign out button clicked'); 
-  }
+  // void _signOut() async {
+  //   await _controller.runJavaScript('''
+  //     document.querySelector('button[form="header-mfe-sign-out"]').click();
+  //   ''');
+  //   print('Sign out button clicked'); 
+  // }
 
   String encryptLoginInfo(String loginInfo) {
     final key = encrypt.Key.fromUtf8('my 32 length key................');
@@ -167,4 +195,21 @@ class _WebViewScreenState extends State<WebViewScreen> {
   bool containsPrefix(String url, String prefix) {
     return url.startsWith(prefix);
   }
+}
+
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }

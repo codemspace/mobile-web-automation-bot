@@ -7,7 +7,8 @@ class User {
   String dateOfBirth;
   String nationality;
   String gender;
-  String address;
+  String primaryAddress;
+  String mailingAddress;
   String passport;
 
   // constructor
@@ -20,7 +21,8 @@ class User {
     required this.dateOfBirth,
     required this.nationality,
     required this.gender,
-    required this.address,
+    required this.primaryAddress,
+    required this.mailingAddress,
     required this.passport,
   });
 
@@ -33,7 +35,8 @@ class User {
     String? dateOfBirth,
     String? nationality,
     String? gender,
-    String? address,
+    String? primaryAddress,
+    String? mailingAddress,
     String? passport,
   }) =>
       User(
@@ -45,7 +48,8 @@ class User {
         dateOfBirth: dateOfBirth ?? this.dateOfBirth,
         nationality: nationality ?? this.nationality,
         gender: gender ?? this.gender,
-        address: address ?? this.address,
+        primaryAddress: primaryAddress ?? this.primaryAddress,
+        mailingAddress: mailingAddress ?? this.mailingAddress,
         passport: passport ?? this.passport,
       );
 
@@ -58,7 +62,8 @@ class User {
         dateOfBirth: json['dateOfBirth'],
         nationality: json['nationality'],
         gender: json['gender'],
-        address: json['address'],
+        primaryAddress: json['primaryAddress'],
+        mailingAddress: json['mailingAddress'],
         passport: json['passport'],
       );
 
@@ -71,7 +76,8 @@ class User {
         'dateOfBirth': dateOfBirth,
         'nationality': nationality,
         'gender': gender,
-        'address': address,
+        'primaryAddress': primaryAddress,
+        'mailingAddress': mailingAddress,
         'passport': passport,
       };
 }
